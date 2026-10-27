@@ -11,10 +11,9 @@ namespace Escuela
 {
     InitializeComponent();
     // Asignar los métodos manejadores correctos
-    btnGuardar.Click += btnGuardar_Click;
     btnLimpiar.Click += btnLimpiar_Click;
     btnMostrar.Click += btnMostrar_Click;
-    Load += Form1_Load;
+            Load += Form1_Load;
 }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -31,22 +30,31 @@ namespace Escuela
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-
+            LimpiarCampos();
         }
+        private void LimpiarCampos()
+        {
+            txtMatricula.Clear();
+            txtNombre.Clear();
+            nudSemestre.Value = 1;
+            txtGrupo.Clear();
+            txtEspecialidad.Clear();
+            txtMatricula.Focus();
+        }   
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            //validamos que os campos no esten vacios
+            //validamos que los campos que no esten vacios
             if (string.IsNullOrWhiteSpace(txtMatricula.Text) ||
                string.IsNullOrWhiteSpace(txtNombre.Text) ||
                string.IsNullOrWhiteSpace(txtGrupo.Text) ||
                string.IsNullOrWhiteSpace(txtEspecialidad.Text))
             {
-                MessageBox.Show("Por favor complete los campos antes e guarda " +
+                MessageBox.Show("Por favor complete los campos antes de guarda " +
                     "Datos incompletos",
                     "ERROR",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                return;
+                
             }
             try
             {
@@ -88,8 +96,12 @@ namespace Escuela
                 MessageBox.Show($"Error al guardar l alumno:{ex.Message}",
                         "ERROR",
                         MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        MessageBoxIcon.Error
+                        );
             }
+            LimpiarCampos();
+            CargarAlumno();
+
         }
         private void CargarAlumno()
         {
